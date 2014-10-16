@@ -14,6 +14,7 @@
 		B26B9F7B19F0630200DD194E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26B9F7A19F0630200DD194E /* Images.xcassets */; };
 		B26B9F7E19F0630200DD194E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B26B9F7C19F0630200DD194E /* LaunchScreen.xib */; };
 		B26B9F8A19F0630200DD194E /* DroppyScrollViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B26B9F8919F0630200DD194E /* DroppyScrollViewTests.m */; };
+		B26B9F9519F0631F00DD194E /* DroppyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26B9F9419F0631F00DD194E /* DroppyScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		B26B9F8319F0630200DD194E /* DroppyScrollViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DroppyScrollViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26B9F8819F0630200DD194E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B26B9F8919F0630200DD194E /* DroppyScrollViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DroppyScrollViewTests.m; sourceTree = "<group>"; };
+		B26B9F9319F0631F00DD194E /* DroppyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DroppyScrollView.h; sourceTree = "<group>"; };
+		B26B9F9419F0631F00DD194E /* DroppyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DroppyScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				B26B9F7A19F0630200DD194E /* Images.xcassets */,
 				B26B9F7C19F0630200DD194E /* LaunchScreen.xib */,
 				B26B9F6D19F0630200DD194E /* Supporting Files */,
+				B26B9F9319F0631F00DD194E /* DroppyScrollView.h */,
+				B26B9F9419F0631F00DD194E /* DroppyScrollView.m */,
 			);
 			path = DroppyScrollView;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B26B9F7619F0630200DD194E /* ViewController.m in Sources */,
+				B26B9F9519F0631F00DD194E /* DroppyScrollView.m in Sources */,
 				B26B9F7319F0630200DD194E /* AppDelegate.m in Sources */,
 				B26B9F7019F0630200DD194E /* main.m in Sources */,
 			);
