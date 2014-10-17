@@ -55,6 +55,11 @@ Optional Values
   DroppyScrollViewDefaultDropLocationBottom is the default value.
   
   
+        #define SpringDamping   0.5
+        #define SpringVelocity  0.1
+        #define Duration        0.5
+
+  Values for animation duration and spring  
 
 
 
