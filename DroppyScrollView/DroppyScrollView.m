@@ -20,6 +20,7 @@
 
 @implementation UIView (Droppy)
 
+
 #pragma mark Getters
 
 - (CGFloat)x {
@@ -89,6 +90,7 @@
         [self setAlpha:to];
     } completion:complate];
 }
+
 
 #pragma mark Makro Duration Animations
 
@@ -181,7 +183,7 @@
     [self addSubview:view];
     
     //index fix
-    if (index <= 0)
+    if (index < [self top])
         index = [self top];
     else if (index > [self bottom])
         index = [self bottom];
