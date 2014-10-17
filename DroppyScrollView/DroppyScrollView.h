@@ -23,9 +23,9 @@
 - (void)rotateYFrom:(CGFloat)from to:(CGFloat)to;
 - (void)alphaFrom:(CGFloat)from to:(CGFloat)to;
 
-- (void)moveYBy:(CGFloat)yAmount duration:(NSTimeInterval)duration;
-- (void)rotateYFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration;
-- (void)alphaFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration;
+- (void)moveYBy:(CGFloat)yAmount duration:(NSTimeInterval)duration complication:(void(^)(BOOL finished))complate;
+- (void)rotateYFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration complication:(void(^)(BOOL finished))complate;
+- (void)alphaFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration complication:(void(^)(BOOL finished))complate;
 
 @end
 
@@ -37,18 +37,17 @@ typedef NS_ENUM(NSUInteger, DroppyScrollViewDefaultDropLocation) {
 
 @interface DroppyScrollView : UIScrollView
 
-@property (nonatomic, strong) NSMutableArray *itemQueue;
-@property (nonatomic, strong) NSMutableArray *items;
-
-@property (nonatomic, assign) CGFloat contentHeight;
 @property (nonatomic, assign) CGFloat itemPadding; //default 10
-
 @property (assign) DroppyScrollViewDefaultDropLocation defaultDropLocation; //default top
 
+
+- (instancetype)initWithFrame:(CGRect)frame;
 
 - (void)dropSubview:(UIView *)view;
 - (void)dropSubview:(UIView *)view atIndex:(NSInteger)index;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (void)removeSubviewAtIndex:(NSInteger)index;
+
+- (NSInteger)randomIndex;
 
 @end
