@@ -12,6 +12,11 @@
 #define SpringVelocity  0.6
 #define Duration        0.3
 
+#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
+#define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
+
+
+#pragma mark - DroppyView
 
 @interface UIView (Droppy)
 
@@ -68,7 +73,11 @@
 
 
 - (void)setRotationY:(CGFloat)y {
+    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+    rotationAndPerspectiveTransform.m34 = 1.0 / -1000.0;
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, DEGREES_TO_RADIANS(y), 0.0f, 1.0f, 0.0f);
     
+    self.layer.transform = rotationAndPerspectiveTransform;
 }
 
 - (void)moveYBy:(CGFloat)yAmount duration:(NSTimeInterval)duration {
@@ -98,7 +107,59 @@
 
 @end
 
+
+#pragma mark - DroppyScrollView
+
 @implementation DroppyScrollView
 
+
+#pragma mark - Lifecycle
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        
+        self.contentHeight = 0;
+        self.defaultDropLocation = DroppyScrollViewDefaultDropLocationTop;
+        
+        self.itemQueue = [[NSMutableArray alloc] init];
+        self.items = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+
+#pragma mark - Droppy Functions
+
+- (void)addSubview:(UIView *)view {
+    if (self.defaultDropLocation == DroppyScrollViewDefaultDropLocationTop) {
+        [self addSubview:view atIndex:[self top]];
+    } else if (self.defaultDropLocation == DroppyScrollViewDefaultDropLocationBottom) {
+        [self addSubview:view atIndex:[self bottom]];
+    }
+}
+
+- (void)addSubview:(UIView *)view atIndex:(NSInteger)index {
+    [super addSubview:view];
+    
+    //index fix
+    if (index < 0)
+        index = [self top];
+    else if (index >= [self bottom])
+        index = [self bottom];
+
+    
+    
+}
+
+
+#pragma mark - Utils
+
+- (NSInteger)top {
+    return 0;
+}
+
+- (NSInteger)bottom {
+    return self.items.count - 1;
+}
 
 @end
