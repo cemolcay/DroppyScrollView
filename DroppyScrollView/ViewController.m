@@ -38,7 +38,7 @@
 
 
 - (void)addButtonPressed:(id)sender {
-    UILabel *v = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 100)];
+    UILabel *v = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 50 + arc4random()%100)];
     [v setBackgroundColor:[self randomColor]];
     [v setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25]];
     [v setTextAlignment:NSTextAlignmentCenter];

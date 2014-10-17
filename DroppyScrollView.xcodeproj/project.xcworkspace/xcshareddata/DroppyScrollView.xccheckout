@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>05A3DDBF-B988-421C-96F1-CD927AABBC20</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DroppyScrollView</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2B22D03EBF9BB006DBB8E0F0E90F15EDE38EA3EA</key>
+		<string>https://github.com/cemolcay/DroppyScrollView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DroppyScrollView.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2B22D03EBF9BB006DBB8E0F0E90F15EDE38EA3EA</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/cemolcay/DroppyScrollView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2B22D03EBF9BB006DBB8E0F0E90F15EDE38EA3EA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2B22D03EBF9BB006DBB8E0F0E90F15EDE38EA3EA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DroppyScrollView</string>
+		</dict>
+	</array>
+</dict>
+</plist>
