@@ -153,7 +153,7 @@
         self.adding = NO;
         
         self.itemPadding = 10;
-        self.defaultDropLocation = DroppyScrollViewDefaultDropLocationTop;
+        self.defaultDropLocation = DroppyScrollViewDefaultDropLocationBottom;
     }
     return self;
 }

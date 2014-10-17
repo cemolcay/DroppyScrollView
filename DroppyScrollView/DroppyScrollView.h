@@ -38,7 +38,7 @@ typedef NS_ENUM(NSUInteger, DroppyScrollViewDefaultDropLocation) {
 @interface DroppyScrollView : UIScrollView
 
 @property (nonatomic, assign) CGFloat itemPadding; //default 10
-@property (assign) DroppyScrollViewDefaultDropLocation defaultDropLocation; //default top
+@property (assign) DroppyScrollViewDefaultDropLocation defaultDropLocation; //default bottom
 
 
 - (instancetype)initWithFrame:(CGRect)frame;
