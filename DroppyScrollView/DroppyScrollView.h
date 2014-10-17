@@ -41,12 +41,13 @@ typedef NS_ENUM(NSUInteger, DroppyScrollViewDefaultDropLocation) {
 @property (nonatomic, strong) NSMutableArray *items;
 
 @property (nonatomic, assign) CGFloat contentHeight;
+@property (nonatomic, assign) CGFloat itemPadding; //default 10
 
-@property (assign) DroppyScrollViewDefaultDropLocation defaultDropLocation;
+@property (assign) DroppyScrollViewDefaultDropLocation defaultDropLocation; //default top
 
 
-- (void)addSubview:(UIView *)view;
-- (void)addSubview:(UIView *)view atIndex:(NSInteger)index;
+- (void)dropSubview:(UIView *)view;
+- (void)dropSubview:(UIView *)view atIndex:(NSInteger)index;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 

@@ -135,6 +135,7 @@
     if ((self = [super initWithFrame:frame])) {
         
         self.contentHeight = 0;
+        self.itemPadding = 10;
         self.defaultDropLocation = DroppyScrollViewDefaultDropLocationTop;
         
         self.itemQueue = [[NSMutableArray alloc] init];
@@ -146,25 +147,37 @@
 
 #pragma mark  Droppy Functions
 
-- (void)addSubview:(UIView *)view {
+- (void)dropSubview:(UIView *)view {
     if (self.defaultDropLocation == DroppyScrollViewDefaultDropLocationTop) {
-        [self addSubview:view atIndex:[self top]];
+        [self dropSubview:view atIndex:[self top]];
     } else if (self.defaultDropLocation == DroppyScrollViewDefaultDropLocationBottom) {
-        [self addSubview:view atIndex:[self bottom]];
+        [self dropSubview:view atIndex:[self bottom]];
     }
 }
 
-- (void)addSubview:(UIView *)view atIndex:(NSInteger)index {
-    [super addSubview:view];
+- (void)dropSubview:(UIView *)view atIndex:(NSInteger)index {
+    [self addSubview:view];
     
     //index fix
-    if (index < 0)
+    if (index <= 0)
         index = [self top];
-    else if (index >= [self bottom])
+    else if (index > [self bottom])
         index = [self bottom];
-
     
+    //shift views under index
+    for (NSInteger i = index; i < [self bottom]; i++) {
+        UIView *item = (UIView *)[self.items objectAtIndex:i];
+        CGFloat shiftAmount = [view h] + self.itemPadding;
+        [item moveYBy:shiftAmount];
+    }
     
+    [view setY:[self YForIndex:index]];
+    [view alphaFrom:0.2 to:1];
+    
+    [self.items insertObject:view atIndex:index];
+    
+    self.contentHeight += [view h] + self.itemPadding*2;
+    [self setContentSize:CGSizeMake([self w], self.contentHeight)];
 }
 
 
@@ -175,7 +188,20 @@
 }
 
 - (NSInteger)bottom {
-    return self.items.count - 1;
+    return self.items.count;
+}
+
+
+- (CGFloat)moveSizeByView:(UIView *)view {
+    return [view h] + self.itemPadding;
+}
+
+- (CGFloat)YForIndex:(NSInteger)index {
+    CGFloat y = self.itemPadding;
+    for (NSInteger i = 0; i < index; i++) {
+        y += [(UIView *)[self.items objectAtIndex:i] h] + self.itemPadding;
+    }
+    return y;
 }
 
 @end
