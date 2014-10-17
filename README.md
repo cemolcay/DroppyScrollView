@@ -15,16 +15,16 @@ Usage
 Copy & paste the DroppyScrollView.h/m to your project. <br>
 Implement it just like any UIScrollView
 
-    DroppyScrollView droppy = [[DroppyScrollView alloc] initWithFrame:self.view.frame];
+    DroppyScrollView *droppy = [[DroppyScrollView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:droppy];
 
 
 For dropping subview
-    //create your subview
-    UIView *v = ...
-    ...
-    
-    [droppy dropSubview:v];
+        //create your subview
+        UIView *v = ...
+        ...
+        
+        [droppy dropSubview:v];
 
 
 Droppy automagically sets its `contentSize` when you add or remove subviews.
