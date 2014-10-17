@@ -2,7 +2,7 @@ DroppyScrollView
 ================
 
 Vertical scroll view with abilty to inserting and removing subviews top or any index with stylish dropping animations.<br>
-Just use `dropSubview:atIndex:` or `dropSubview` instead of `addSubview:`.
+Just use `dropSubview:atIndex:` or `dropSubview:` instead of `addSubview:`.
 
 Demo
 ----
