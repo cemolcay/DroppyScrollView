@@ -20,6 +20,7 @@ Implement it just like any UIScrollView
 
 
 For dropping subview
+
         //create your subview
         UIView *v = ...
         ...
