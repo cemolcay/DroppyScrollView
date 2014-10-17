@@ -8,9 +8,9 @@
 
 #import "DroppyScrollView.h"
 
-#define SpringDamping   0.3
-#define SpringVelocity  0.6
-#define Duration        0.3
+#define SpringDamping   0.5
+#define SpringVelocity  0.1
+#define Duration        1
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 #define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
@@ -18,25 +18,9 @@
 
 #pragma mark - DroppyView
 
-@interface UIView (Droppy)
-
-- (CGFloat)x;
-- (CGFloat)y;
-- (CGFloat)w;
-- (CGFloat)h;
-
-- (void)setX:(CGFloat)x;
-- (void)setY:(CGFloat)y;
-- (void)setW:(CGFloat)w;
-- (void)setH:(CGFloat)h;
-
-- (void)moveYBy:(CGFloat)yAmount duration:(NSTimeInterval)duration;
-- (void)rotateYFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration;
-- (void)alphaFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration;
-
-@end
-
 @implementation UIView (Droppy)
+
+#pragma mark Getters
 
 - (CGFloat)x {
     return self.frame.origin.x;
@@ -55,6 +39,8 @@
 }
 
 
+#pragma mark Setters
+
 - (void)setX:(CGFloat)x {
     [self setFrame:(CGRect){{x, [self y]}, {[self w], [self h]}}];
 }
@@ -71,38 +57,68 @@
     [self setFrame:(CGRect){{[self x], [self y]}, {[self w], h}}];
 }
 
-
 - (void)setRotationY:(CGFloat)y {
     CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
     rotationAndPerspectiveTransform.m34 = 1.0 / -1000.0;
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, DEGREES_TO_RADIANS(y), 0.0f, 1.0f, 0.0f);
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, DEGREES_TO_RADIANS(y), 1.0f, 0.0f, 0.0f);
     
     self.layer.transform = rotationAndPerspectiveTransform;
 }
 
+
+#pragma mark Custom Duration Animations
+
 - (void)moveYBy:(CGFloat)yAmount duration:(NSTimeInterval)duration {
     [self animate:^{
         [self setY:[self y] + yAmount];
-    }];
+    } duration:duration];
 }
 
 - (void)rotateYFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration {
     [self setRotationY:from];
     [self animate:^{
         [self setRotationY:to];
-    }];
+    } duration:duration];
 }
 
 - (void)alphaFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration {
     [self setAlpha:from];
+    [UIView animateWithDuration:duration animations:^{
+        [self setAlpha:to];
+    }];
+}
+
+#pragma mark Makro Duration Animations
+
+- (void)moveYBy:(CGFloat)yAmount {
     [self animate:^{
+        [self setY:[self y] + yAmount];
+    }];
+}
+
+- (void)rotateYFrom:(CGFloat)from to:(CGFloat)to {
+    [self setRotationY:from];
+    [self animate:^{
+        [self setRotationY:to];
+    }];
+}
+
+- (void)alphaFrom:(CGFloat)from to:(CGFloat)to {
+    [self setAlpha:from];
+    [UIView animateWithDuration:Duration animations:^{
         [self setAlpha:to];
     }];
 }
 
 
+#pragma mark Animation Utils
+
 - (void)animate:(void(^)())animations {
     [UIView animateWithDuration:Duration delay:0 usingSpringWithDamping:SpringDamping initialSpringVelocity:SpringVelocity options:kNilOptions animations:animations completion:nil];
+}
+
+- (void)animate:(void(^)())animations duration:(NSTimeInterval)duration {
+    [UIView animateWithDuration:duration delay:0 usingSpringWithDamping:SpringDamping initialSpringVelocity:SpringVelocity options:kNilOptions animations:animations completion:nil];
 }
 
 @end
@@ -113,7 +129,7 @@
 @implementation DroppyScrollView
 
 
-#pragma mark - Lifecycle
+#pragma mark  Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
@@ -128,7 +144,7 @@
 }
 
 
-#pragma mark - Droppy Functions
+#pragma mark  Droppy Functions
 
 - (void)addSubview:(UIView *)view {
     if (self.defaultDropLocation == DroppyScrollViewDefaultDropLocationTop) {
@@ -152,7 +168,7 @@
 }
 
 
-#pragma mark - Utils
+#pragma mark  Utils
 
 - (NSInteger)top {
     return 0;

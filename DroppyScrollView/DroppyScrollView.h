@@ -7,6 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+@interface UIView (Droppy)
+
+- (CGFloat)x;
+- (CGFloat)y;
+- (CGFloat)w;
+- (CGFloat)h;
+
+- (void)setX:(CGFloat)x;
+- (void)setY:(CGFloat)y;
+- (void)setW:(CGFloat)w;
+- (void)setH:(CGFloat)h;
+
+- (void)moveYBy:(CGFloat)yAmount;
+- (void)rotateYFrom:(CGFloat)from to:(CGFloat)to;
+- (void)alphaFrom:(CGFloat)from to:(CGFloat)to;
+
+- (void)moveYBy:(CGFloat)yAmount duration:(NSTimeInterval)duration;
+- (void)rotateYFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration;
+- (void)alphaFrom:(CGFloat)from to:(CGFloat)to duration:(NSTimeInterval)duration;
+
+@end
+
 
 typedef NS_ENUM(NSUInteger, DroppyScrollViewDefaultDropLocation) {
     DroppyScrollViewDefaultDropLocationTop,
