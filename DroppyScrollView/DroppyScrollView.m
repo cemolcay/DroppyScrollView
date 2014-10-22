@@ -133,7 +133,8 @@
 @interface DroppyScrollView ()
 
 @property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, strong) NSMutableArray *itemsQueue;
+@property (nonatomic, strong) NSMutableArray *addingQueue;
+@property (nonatomic, strong) NSMutableArray *removingQueue;
 
 @property (nonatomic, assign, getter=isAdding) BOOL adding;
 @property (nonatomic, assign, getter=isRemoving) BOOL removing;
@@ -149,7 +150,8 @@
     if ((self = [super initWithFrame:frame])) {
 
         self.items = [[NSMutableArray alloc] init];
-        self.itemsQueue = [[NSMutableArray alloc] init];
+        self.addingQueue = [[NSMutableArray alloc] init];
+        self.removingQueue = [[NSMutableArray alloc] init];
         
         self.removing = NO;
         self.adding = NO;
@@ -174,12 +176,12 @@
 - (void)dropSubview:(UIView *)view atIndex:(NSInteger)index {
     
     if (self.isAdding || self.isRemoving) {
-        [self addViewToQueue:view index:index];
+        [self sendViewToAddingQueue:view index:index];
         return;
     }
     
     [self setAdding:YES];
-    [self addViewToQueue:view index:index];
+    [self sendViewToAddingQueue:view index:index];
     [self addSubview:view];
     
     //index fix
@@ -204,7 +206,7 @@
         [view setRotationY:0];
         [view setAlpha:1];
     } duration:Duration complication:^(BOOL finished) {
-        [self.itemsQueue removeObjectAtIndex:0];
+        [self.addingQueue removeObjectAtIndex:0];
         [self.items insertObject:view atIndex:index];
         
         [self updateContentSize];
@@ -215,11 +217,12 @@
 
 - (void)removeSubviewAtIndex:(NSInteger)index {
     if (index < 0 || index >= [self bottom] || [self bottom] == 0 || self.isRemoving || self.isAdding) {
+        [self sendViewAtIndexToRemovingQueue:index];
         return;
     }
     
     [self setRemoving:YES];
-    
+    [self sendViewAtIndexToRemovingQueue:index];
     UIView *removingView = (UIView *)[self.items objectAtIndex:index];
     
     //shift up views under index
@@ -238,6 +241,8 @@
         if (finished) {
             //droppy management
             [removingView removeFromSuperview];
+            
+            [self.removingQueue removeObjectAtIndex:0];
             [self.items removeObjectAtIndex:index];
             
             [self updateContentSize];
@@ -256,21 +261,47 @@
     [self setContentSize:CGSizeMake([self w], height)];
 }
 
-- (void)addViewToQueue:(UIView *)view index:(NSInteger)index {
+
+#pragma mark Queues
+
+- (void)sendViewToAddingQueue:(UIView *)view index:(NSInteger)index {
     NSDictionary *obj = @{@"view":view, @"index":@(index)};
-    if ([self.itemsQueue containsObject:obj]) {
+    if ([self.addingQueue containsObject:obj]) {
         return;
     } else {
-        [self.itemsQueue addObject:obj];
+        [self.addingQueue addObject:obj];
     }
 }
+
+- (void)sendViewAtIndexToRemovingQueue:(NSInteger)index {
+    if ([self.removingQueue containsObject:@(index)]) {
+        return;
+    } else {
+        [self.removingQueue addObject:@(index)];
+    }
+}
+
+
+#pragma mark Properties
 
 - (void)setAdding:(BOOL)adding {
     _adding = adding;
     
     if (!adding) {
-        if (self.itemsQueue.count > 0){
-            [self dropSubview:[[self.itemsQueue firstObject] objectForKey:@"view"] atIndex:[[[self.itemsQueue firstObject] objectForKey:@"index"] integerValue]];
+        if (self.addingQueue.count > 0){
+            NSDictionary *queuedObject = [self.addingQueue firstObject];
+            [self dropSubview:queuedObject[@"view"] atIndex:[queuedObject[@"index"] integerValue]];
+        }
+    }
+}
+
+- (void)setRemoving:(BOOL)removing {
+    _removing = removing;
+    
+    if (!removing) {
+        if (self.removingQueue.count > 0) {
+            NSInteger queuedObject = [[self.removingQueue firstObject] integerValue];
+            [self removeSubviewAtIndex:queuedObject];
         }
     }
 }
