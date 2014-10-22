@@ -197,7 +197,7 @@
     }
     
     //add view animations
-    [view setY:[self YForIndex:index]];
+    [view setY:[self yForIndex:index]];
     [view setRotationY:45];
     [view setAlpha:0.5];
     [view animate:^{
@@ -286,12 +286,14 @@
     return self.items.count;
 }
 
-
-- (CGFloat)moveSizeByView:(UIView *)view {
-    return [view h] + self.itemPadding;
+- (NSInteger)randomIndex {
+    if ([self bottom] == 0)
+        return 0;
+    else return arc4random()%[self bottom];
 }
 
-- (CGFloat)YForIndex:(NSInteger)index {
+
+- (CGFloat)yForIndex:(NSInteger)index {
     CGFloat y = self.itemPadding;
     for (NSInteger i = 0; i < index; i++) {
         y += [(UIView *)[self.items objectAtIndex:i] h] + self.itemPadding;
@@ -299,10 +301,5 @@
     return y;
 }
 
-- (NSInteger)randomIndex {
-    if ([self bottom] == 0)
-        return 0;
-    else return arc4random()%[self bottom];
-}
 
 @end

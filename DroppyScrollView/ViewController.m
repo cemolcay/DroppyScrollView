@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
+    // add navigation bar buttons
     UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonPressed:)];
     UIBarButtonItem *remove = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeButtonPressed:)];
     [self.navigationItem setLeftBarButtonItem:add];
@@ -29,6 +31,7 @@
 
     [self.navigationItem setTitle:@"DroppyScrollView Demo"];
     
+    // create droppy
     self.droppy = [[DroppyScrollView alloc] initWithFrame:self.view.frame];
     [self.droppy setDefaultDropLocation:DroppyScrollViewDefaultDropLocationBottom];
     [self.view addSubview:self.droppy];
